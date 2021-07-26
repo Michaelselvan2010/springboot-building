@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloWorldController {
 
 	
-	//Simple Method
+	//Simple Method 
+	// Testing
 	// URI -/helloworld
 	//GET 
 	//@RequestMapping(method = RequestMethod.GET, path = "/helloworld")
