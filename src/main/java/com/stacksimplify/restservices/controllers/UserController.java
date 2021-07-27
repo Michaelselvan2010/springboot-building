@@ -1,11 +1,14 @@
 package com.stacksimplify.restservices.controllers;
 
-import java.net.http.HttpHeaders;
 import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +21,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.stacksimplify.restservices.entities.UserInfo;
 import com.stacksimplify.restservices.exceptions.UserExistsException;
+import com.stacksimplify.restservices.exceptions.UserNameNotFoundException;
 import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.services.UserService;
 
 @RestController
+@Validated
 public class UserController {
 
 	// Autowire teh UserService
@@ -41,7 +46,7 @@ public class UserController {
 	//@PostMapping Annotation
 	
 	@PostMapping("/users")
-	public ResponseEntity<Void> createUser(@RequestBody UserInfo userInfo,UriComponentsBuilder builder) {
+	public ResponseEntity<Void> createUser(@Valid @RequestBody UserInfo userInfo,UriComponentsBuilder builder) {
 		
 		try {
 			
@@ -63,7 +68,7 @@ public class UserController {
 	 * userService.getUserById(id); }
 	 */
 	@GetMapping("/users/{id}")
-	public java.util.Optional<UserInfo> getUserById(@PathVariable("id") Long id){
+	public java.util.Optional<UserInfo> getUserById(@PathVariable("id") @Min(1) Long id){
 		
 		try {
 			return userService.getUserById(id);
@@ -95,12 +100,13 @@ public class UserController {
 	
 	//getuserBuUsername
 	@GetMapping("/users/byusername/{username}")
-	public UserInfo getUserByUsername(@PathVariable("username") String username) {
-		return userService.getUserInfoByUsername(username);
-		
+	public UserInfo getUserByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
+		UserInfo userInfo= userService.getUserInfoByUsername(username);
+		if(userInfo ==null)
+		   throw new UserNameNotFoundException("Username: '"+username+"' Not found in User Repository");
+		return userInfo;
 	}
-	
-	
+
 }
 
 	
