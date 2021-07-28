@@ -11,14 +11,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 // Entity
 
 @Entity
 @Table(name="user1")
-@JsonIgnoreProperties({"firstname","lastname"})
+//@JsonIgnoreProperties({"firstname","lastname"})  -- Static Filtering @JsonIgnore
+
+@JsonFilter(value="userFilter")
 public class UserInfo{
     @Id
     @GeneratedValue
@@ -42,7 +43,7 @@ public class UserInfo{
     @Column(name="ROLE",length=50,nullable=false)
 	private String role;
 	
-    @JsonIgnore
+   // @JsonIgnore  -- Static Filtering @JsonIgnore
 	@Column(name="SSN",length=50,nullable=false,unique=true)
 	private String ssn;
 
