@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="user1")
-public class UserInfo {
+public class UserInfo{
     @Id
     @GeneratedValue
 	private Long id;
