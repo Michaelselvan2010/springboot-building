@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name="orders")
@@ -17,8 +18,10 @@ public class Order {
 	@Id
 	//@GeneratedValue
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+	@JsonView(Views.Internal.class)
 	private Long orderid;
+	
+	@JsonView(Views.Internal.class)
 	private String orderdescription;
 	
 	@ManyToOne(fetch =FetchType.LAZY)
