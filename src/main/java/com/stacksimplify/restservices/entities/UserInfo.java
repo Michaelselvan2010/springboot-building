@@ -11,10 +11,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // Entity
 
 @Entity
 @Table(name="user1")
+@JsonIgnoreProperties({"firstname","lastname"})
 public class UserInfo{
     @Id
     @GeneratedValue
@@ -38,6 +42,7 @@ public class UserInfo{
     @Column(name="ROLE",length=50,nullable=false)
 	private String role;
 	
+    @JsonIgnore
 	@Column(name="SSN",length=50,nullable=false,unique=true)
 	private String ssn;
 
