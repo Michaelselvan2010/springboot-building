@@ -25,6 +25,12 @@ import com.stacksimplify.restservices.exceptions.UserNameNotFoundException;
 import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.services.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+
+
+@Api(tags="User Management RESTful Services", value="UserController",description="Controller for User Managemnt Service")
 @RestController
 @Validated
 public class UserController {
@@ -35,6 +41,8 @@ public class UserController {
 	private UserService userService;
 	
 	//getAllUsers Method
+	
+	@ApiOperation(value ="Retrive list of Users")
 	@GetMapping("/users")
 	public List<UserInfo> getAllUsers(){
 		
@@ -44,7 +52,7 @@ public class UserController {
 	// Create User
 	//@RequestBody Annotation
 	//@PostMapping Annotation
-	
+	@ApiOperation(value ="Create new  Users")
 	@PostMapping("/users")
 	public ResponseEntity<Void> createUser(@Valid @RequestBody UserInfo userInfo,UriComponentsBuilder builder) {
 		
