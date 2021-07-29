@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -27,6 +28,7 @@ import com.stacksimplify.restservices.services.UserService;
 
 @RestController
 @Validated
+@RequestMapping(value="/users")
 public class UserController {
 
 	// Autowire teh UserService
@@ -35,7 +37,7 @@ public class UserController {
 	private UserService userService;
 	
 	//getAllUsers Method
-	@GetMapping("/users")
+	@GetMapping
 	public List<UserInfo> getAllUsers(){
 		
 		return userService.getAllUsers();
@@ -45,7 +47,7 @@ public class UserController {
 	//@RequestBody Annotation
 	//@PostMapping Annotation
 	
-	@PostMapping("/users")
+	@PostMapping
 	public ResponseEntity<Void> createUser(@Valid @RequestBody UserInfo userInfo,UriComponentsBuilder builder) {
 		
 		try {
@@ -67,7 +69,7 @@ public class UserController {
 	 * public Optional<UserInfo> getUserById(@PathVariable("id") Long id){ return
 	 * userService.getUserById(id); }
 	 */
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
 	public java.util.Optional<UserInfo> getUserById(@PathVariable("id") @Min(1) Long id){
 		
 		try {
@@ -79,7 +81,7 @@ public class UserController {
 	
 	
 	//updateUserById
-	@PutMapping("/users/{id}")
+	@PutMapping("/{id}")
 	public UserInfo updateUserById(@PathVariable("id") Long id,
 			@RequestBody UserInfo userInfo) {
 		
@@ -99,7 +101,7 @@ public class UserController {
 	
 	
 	//getuserBuUsername
-	@GetMapping("/users/byusername/{username}")
+	@GetMapping("/byusername/{username}")
 	public UserInfo getUserByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
 		UserInfo userInfo= userService.getUserInfoByUsername(username);
 		if(userInfo ==null)
